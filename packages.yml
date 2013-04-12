@@ -67,7 +67,8 @@
 - package: matplotlib
   url: git://github.com/matplotlib/matplotlib.git
   key: git:4c75fac733ab8193705545c47abeca59adda90fb
-  deps: []
+  deps: [python, numpy]
+  recipe: distutils
 
 
 - package: nose
@@ -78,13 +79,15 @@
 
 - package: numexpr
   url: git://github.com/erdc-cm/numexpr.git
-  key: git:ed3ca13b58548d68fbc8b9a380990aac1e4897c9
-  deps: []
+  key: git:c452bb8fa8aac87b89d131f5d542cecea522a239
+  deps: [python, numpy]
+  recipe: distutils
 
 - package: numpy
   url: git://github.com/numpy/numpy.git
-  key: git:900d82ecd42932fc62c080341f8c918c9e1125b7
-  deps: []
+  key: git:697316a867a32e9f72778a29226c9febbf867ee8
+  deps: [python]
+  recipe: distutils
 
 
 #petsc:
@@ -119,3 +122,8 @@
   recipe: pure_make
   profile_install: false
   deps: []
+
+- package: pytables
+  url: https://pypi.python.org/packages/source/t/tables/tables-2.4.0.tar.gz
+  key: tar.gz:fpndwh734ihogxktg7mxa4p7if32o5bl
+  deps: [python, numexpr]
