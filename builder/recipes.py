@@ -98,6 +98,10 @@ def json_multiline(s):
     return dedent(s).splitlines()
 
 def distutils_recipe(ctx, pkg_attrs, configure, build_spec):
+    # flags are given to the "build" command
+    flags = pkg_attrs.get('flags', [])
+    if not isinstance(flags, list):
+        raise TypeError('"flags" must be a list')
     build_spec["build"].update({
         "cwd": "src",
         "commands": [
@@ -125,8 +129,10 @@ def distutils_recipe(ctx, pkg_attrs, configure, build_spec):
                     env['PYTHONPATH'] = pathsep.join(python_path)
                     
                     # TODO: hashdist.build.exportenviron(), then run below in a new command
+                    flags = [os.path.expandvars(x) for x in %s]
+                    subprocess.check_call([sys.executable, 'setup.py', 'build'] + flags)
                     subprocess.check_call([sys.executable, 'setup.py', 'install', '--prefix=' + env['ARTIFACT']])
-                    """)
+                    """ % repr(flags))
                   }]},
             {"hit": ["build-postprocess", "--shebang=multiline", "--write-protect"]}
             ]
